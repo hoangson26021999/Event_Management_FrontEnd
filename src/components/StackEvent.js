@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Box, VStack, StackDivider, Text } from '@chakra-ui/react'
+import { Box, VStack, StackDivider, Heading, Image } from '@chakra-ui/react'
+import { useNavigate } from "react-router-dom";
+import EventImage from '../images/event.jpg'
 
-function StackEvent() {
+function StackEvent(props) {
 
-    const [events, setEvents] = useState([])
+    let navigate = useNavigate();
 
-    useEffect(() => {
-        fetch("http://localhost:8080/getEvents")
-            .then(res => res.json())
-            .then((result) => {
-                setEvents(result);
-            })
-    }, [])
+    function handleClick(evt) {
+        navigate('event/' + evt);
+    }
 
     return (
         <>
@@ -22,13 +20,21 @@ function StackEvent() {
                 width="80%"
                 margin="0 auto"
             >
+                {props.events.map(event => (
+                    <>
+                        <Heading fontSize='xl'> {event.event_name}</Heading>
+                        <Box borderWidth='3px' borderRadius='lg' overflow='hidden' key={event.event_id} onClick={() => { handleClick(event.event_id) }}>
 
-                {events.map(event => (
-                    <Box borderWidth='1px' borderRadius='lg' overflow='hidden' key={event.event_id} h='80px' >
-                        <Text> {event.event_name} </Text>
-                    </Box>
+                            <Image
+                                max-height='100%'
+                                max-width='100%'
+                                objectFit='cover'
+                                src={EventImage}
+                                alt='Event'
+                            />
+                        </Box>
+                    </>
                 ))}
-
             </VStack>
         </>
     )

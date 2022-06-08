@@ -10,48 +10,78 @@ import {
 } from '@chakra-ui/react'
 
 import { EditIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
-
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
 
     const [show, setShow] = React.useState(false)
     const handleShowClick = () => setShow(!show)
 
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    let navigate = useNavigate()
 
     const handleClick = (e) => {
         e.preventDefault()
         const account = { username, password }
-        console.log(account)
-        fetch("https://localhost:8080/j_spring_security_check", {
-
-            method: "POST",
-            header: { "Content-Type": "application/json" },
+        fetch("http://localhost:8080/authenticate", {
+            mode: 'cors',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(account)
+        }).then((response) => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                throw Error(response.status)
+            }
+        }).then(result => {
+            console.log(result)
+            localStorage.setItem("accessToken", result.jwt)
 
-        }).then(() => {
-            console.log("Đã gửi tài khoản để đăng nhập")
+            fetch("http://localhost:8080/op_api/getUserRole", {
+                mode: "cors",
+                method: 'GET',
+                headers: {
+                    'Authorization': 'EvMa ' + localStorage.getItem("accessToken"),
+                },
+            }).then(response => {
+                console.log(response)
+                if (response.ok) {
+                    return response.text()
+                } else {
+                    throw new Error(response.status)
+                }
+            }).then(result => {
+                navigate('/'+result+'/' )
+            }).catch(error => console.log('error', error));
+        }).catch(error => {
+            console.log("error", error)
+            alert("Username or PassWord are wrong")
         })
-
     }
 
     return (
         <>
-            <Text fontSize='xl' align-items="center"  > Login </Text>
-            <Stack spacing={4} >
-                <InputGroup width={500} >
+            <Stack
+                spacing={4}
+                width="80%"
+                margin="0 auto"
+                align='stretch'
+            >
+                <Text fontSize='3xl' align-items="center" > Login </Text>
+                <InputGroup width='100%' max-width='500px'>
                     <InputLeftElement
                         pointerEvents='none'
                         children={<EditIcon color='gray.300' />}
                     />
                     <Input type='tel' placeholder='Account' onChange={(e) => { setUsername(e.target.value) }} />
                 </InputGroup>
-
-
-                <InputGroup size='md' width={500} >
+                <InputGroup size='md' width='100%' max-width='500px' >
                     <Input
                         pr='4.5rem'
                         type={show ? 'text' : 'password'}
@@ -65,7 +95,7 @@ function Login() {
                     </InputRightElement>
                 </InputGroup>
 
-                <Button colorScheme='teal' size='md' width={500} onClick={handleClick}>
+                <Button colorScheme='teal' size='md' width='100%' max-width='250px' onClick={handleClick}>
                     Đăng nhập
                 </Button>
             </Stack>

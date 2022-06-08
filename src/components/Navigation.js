@@ -1,35 +1,33 @@
 import {
     Flex,
     Box,
-    Spacer,
-    Text
+    Spacer
 } from '@chakra-ui/react'
 
-import { Button } from '@chakra-ui/react'
+import {
+    Link
+} from "react-router-dom";
 
-function HomeNav() {
+import "./css/header.css"
+
+const HomeNav = () => {
     return (
         <>
             <Flex>
                 <Box p='4' >
-                    <Text fontSize='2xl'> Events Management </Text>
+                    <Link to="" fontSize='2xl' className="logo"> Events Management </Link>
                 </Box>
                 <Spacer />
                 <Box p='4' >
-                    <Button colorScheme='teal' size='md'>
-                        Đăng nhập
-                    </Button>
+                    <Link to="login" fontSize='2xl' > Đăng nhập </Link>
                 </Box>
                 <Box p='4' >
-                    <Button colorScheme='teal' size='md'>
-                        Đăng ký
-                    </Button>
+                    <Link to="sign_up" fontSize='2xl' > Đăng ký</Link>
                 </Box>
             </Flex>
         </>
     )
 }
-
 
 export default HomeNav;
 
