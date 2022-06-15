@@ -48,7 +48,7 @@ function Login() {
                 method: 'GET',
                 headers: {
                     'Authorization': 'EvMa ' + localStorage.getItem("accessToken"),
-                },
+                }
             }).then(response => {
                 console.log(response)
                 if (response.ok) {

@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Box, VStack, StackDivider, Heading, Image } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
 
-
-function StackEvent(props) {
+function StackPresentations(props) {
 
     let navigate = useNavigate();
 
     function handleClick(evt) {
-        navigate('event/' + evt);
+        navigate('pres/' + evt);
     }
 
     return (
@@ -20,16 +19,16 @@ function StackEvent(props) {
                 width="80%"
                 margin="0 auto"
             >
-                {props.events.map(event => (
+                {props.pres.map(pre => (
                     <>
-                        <Heading fontSize='xl'> {event.event_name}</Heading>
-                        <Box borderWidth='3px' borderRadius='lg' overflow='hidden' key={event.event_id} onClick={() => {handleClick(event.event_id)}}>
+                        <Heading fontSize='xl'> {pre.presentation_name}</Heading>
+                        <Box borderWidth='3px' borderRadius='lg' overflow='hidden' key={pre.presentation_id} onClick={() => {handleClick(pre.presentation_id)}}>
                             <Image
                                 max-height='100%'
                                 max-width='100%'
                                 objectFit='cover'
                                 src={props.srcImage}
-                                alt='Event'
+                                alt='Pre'
                             />
                         </Box>
                     </>
@@ -39,7 +38,7 @@ function StackEvent(props) {
     )
 }
 
-export default StackEvent;
+export default StackPresentations;
 
 
 

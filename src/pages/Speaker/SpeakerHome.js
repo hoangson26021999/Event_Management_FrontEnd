@@ -1,5 +1,4 @@
 import SpeakerHomeNav from '../../components/Speaker/SpeakerHomeNav';
-import StackEvent from '../../components/StackEvent';
 import { Route, Routes } from 'react-router-dom';
 import SpeakerYourEvent from './SpeakerYourEvent'
 import SpeakerYourPresentations from './SpeakerYourPresentations'
@@ -16,8 +15,8 @@ function Speaker_Home() {
             </header>
             <Routes>
                 <Route path="" element={<SpeakerHomeContent />} />
-                <Route path="your_events" element={<SpeakerYourEvent/>}/>
-                <Route path="your_presentations" element={<SpeakerYourPresentations/>} />
+                <Route path="your_events/*" element={<SpeakerYourEvent/>}/>
+                <Route path="your_presentations/*" element={<SpeakerYourPresentations/>} />
                 <Route path="event/:id" element={<SpeakerEventDetail />} />
             </Routes>
 

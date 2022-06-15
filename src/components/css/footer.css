@@ -1,0 +1,9 @@
+.footer {
+  position: fixed;
+  padding: auto;
+  bottom: 0;
+  width: 100%;
+  /* Height of the footer*/ 
+  height: 7%;
+  background: grey;
+}

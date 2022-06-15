@@ -1,8 +1,7 @@
-import React from 'react';
-import RegisterNav from '../../components/Register/RegisterNav';
-import EventDetail from '../../pages/EventDetail';
-import "../../components//css/header.css"
-
+import React from 'react'
+import RegisterNav from '../../components/Register/RegisterNav'
+import EventDetail from '../../pages/EventDetail'
+import "../../components//css/header.css" 
 import {
     Routes,
     Route
@@ -11,7 +10,7 @@ import RegisterYourEvent from './RegisterYourEvent';
 import RegisterHomeContent from './RegisterHomeContent';
 
 function Home() {
-    
+
     return (
         <>
             <header className='header' >
